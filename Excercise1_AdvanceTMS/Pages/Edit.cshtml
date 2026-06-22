@@ -11,6 +11,8 @@
     <form method="post" class="card p-4 shadow-sm">
         <div class="form-group mb-3">
             <label class="font-weight-bold">タスクID (変更不可)</label>
+            <!-- The readonly attribute lets the user see which record they are working on but locks down the input text box so they cannot type over or corrupt the identity key.-->
+            <!-- readonly属性を使用すると、ユーザーはどのレコードを操作しているかを確認できますが、入力テキストボックスがロックされるため、IDキーを上書きしたり、破損させたりすることはできません。-->
             <input asp-for="EditableTask.TASK_ID" class="form-control bg-light" readonly />
         </div>
 
