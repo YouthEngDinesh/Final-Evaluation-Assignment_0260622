@@ -1,0 +1,71 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "タスク一覧";
+}
+
+<div class="container mt-4">
+    <h2>タスク管理システム</h2>
+    <hr />
+    <!--  This builds the search form. -->
+    <form method="get" class="form-inline mb-4 p-3 bg-light border rounded">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label for="SearchAssignee" class="col-form-label font-weight-bold">担当者名:</label>
+                <input type="text" asp-for="SearchAssignee" class="form-control" placeholder="担当者名を入力" />
+            </div>
+            <div class="col-auto">
+                <label for="SearchStatus" class="col-form-label font-weight-bold">ステータス:</label>
+                <select asp-for="SearchStatus" class="form-control">
+                    <option value="">-- 全て --</option>
+                    <option value="未着手">未着手</option>
+                    <option value="進行中">進行中</option>
+                    <option value="完了">完了</option>
+                </select>
+            </div>
+            <div class="col-auto align-self-end mt-3 mt-sm-0">
+                <button type="submit" class="btn btn-primary px-4">検索</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>タスク名</th>
+                <th>担当者名</th>
+                <th>期限日</th>
+                <th>ステータス</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Tasks.Any())
+            {
+                @foreach (var task in Model.Tasks)
+                {
+                    <tr>
+                        <td>@task.TASK_ID</td>
+                        <td>@task.TASK_NAME</td>
+                        <td>@task.ASSIGNEE</td>
+                        <td>@task.DUE_DATE.ToString("yyyy/MM/dd")</td>
+                        <td>
+                            <span class="badge @(task.STATUS == "完了" ? "badge-success text-success fw-bold" : task.STATUS == "進行中" ? "badge-warning text-primary fw-bold" : "badge-secondary text-secondary")">
+                                @task.STATUS
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@task.TASK_ID" class="btn btn-sm btn-info">編集</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">該当するタスクが見つかりません。</td>
+                </tr>
+            }
+        </tbody>
+    </table>

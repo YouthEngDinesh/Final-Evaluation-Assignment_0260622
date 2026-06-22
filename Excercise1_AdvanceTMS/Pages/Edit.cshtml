@@ -1,0 +1,51 @@
+﻿@page "{id:int}"
+@model Excercise1_AdvanceTMS.Pages.EditModel
+@{
+    ViewData["Title"] = "タスク編集";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2>タスク内容編集</h2>
+    <hr />
+
+    <form method="post" class="card p-4 shadow-sm">
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">タスクID (変更不可)</label>
+            <input asp-for="EditableTask.TASK_ID" class="form-control bg-light" readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="EditableTask.TASK_NAME" class="font-weight-bold">タスク名</label>
+            <input asp-for="EditableTask.TASK_NAME" class="form-control" required />
+            <span asp-validation-for="EditableTask.TASK_NAME" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="EditableTask.ASSIGNEE" class="font-weight-bold">担当者名</label>
+            <input asp-for="EditableTask.ASSIGNEE" class="form-control" required />
+            <span asp-validation-for="EditableTask.ASSIGNEE" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="EditableTask.DUE_DATE" class="font-weight-bold">期限日</label>
+            <input asp-for="EditableTask.DUE_DATE" type="date" class="form-control" required />
+            <span asp-validation-for="EditableTask.DUE_DATE" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="EditableTask.STATUS" class="font-weight-bold">ステータス</label>
+            <select asp-for="EditableTask.STATUS" class="form-control">
+                <option value="未着手">未着手</option>
+                <option value="進行中">進行中</option>
+                <option value="完了">完了</option>
+            </select>
+        </div>
+
+        <input type="hidden" asp-for="EditableTask.CREATE_DATETIME" />
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success px-4">更新保存</button>
+            <a asp-page="./Index" class="btn btn-secondary px-4">キャンセル</a>
+        </div>
+    </form>
+</div>
