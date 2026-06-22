@@ -21,6 +21,7 @@ namespace Excercise1_AdvanceTMS.Pages
             using (var connection = new SqlConnection(_connectionString))
             {
                 // Fetch targeted record content context mapping
+                //This prevents SQL Injection vulnerabilities
                 var sql = "SELECT * FROM TASKS WHERE TASK_ID = @Id";
                 EditableTask = await connection.QueryFirstOrDefaultAsync<TaskModel>(sql, new { Id = id });
 
@@ -50,6 +51,7 @@ namespace Excercise1_AdvanceTMS.Pages
                                 UPDATE_DATETIME = GETDATE() 
                             WHERE TASK_ID = @TASK_ID";
 
+                //connection.ExecuteAsync is used because we are making a change to the database rows rather than fetching data back.
                 await connection.ExecuteAsync(sql, EditableTask);
             }
 
